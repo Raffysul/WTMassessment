@@ -2,17 +2,30 @@ package com.example.wtmassessment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+//import androidx.appcompat.widget.Toolbar
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = ViewPagerAdapter(supportFragmentManager,lifecycle)
-        view_pager.adapter = adapter
-        TabLayoutMediator(tab_layout, view_pager){tab, position->
+        viewPager()
+
+    }
+
+    private fun viewPager() {
+        tabLayout = findViewById(R.id.tab_layout)
+
+        viewPager = findViewById(R.id.view_pager)
+        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+        viewPager.adapter = adapter
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> {
                     tab.text = "Sign In"
@@ -22,6 +35,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.attach()
-
     }
 }
